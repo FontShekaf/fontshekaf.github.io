@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>فونت شکاف</title>
+		<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.ico">
+		<link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.svg">
+		<meta name="theme-color" content="#715aff">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simpledotcss@latest/simple.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap-grid.rtl.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+		<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700;900&display=swap");
+			@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap");
+			@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap");
+			:root {
+				--accent-bg: #f0eeff;
+				--accent: #715aff;
+				--preformatted: #333;
+				font-family: "Source Sans Pro", "Vazirmatn", var(--sans-font);
+			}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					color-scheme: dark;
+					--accent-bg: #2b2b2b;
+					--accent: #a682ff;
+					--preformatted: #ccc;
+				}
+				#download-button { background-color: #a4de02; }
+			}
+			body { word-wrap: break-word; }
+			code { color: var(--preformatted); font-family: "Source Code Pro", var(--mono-font) }
+			header { font-weight: 900; text-align: center; }
+			footer { font-weight: 700; text-align: center; }
+			.section { margin: 2rem 0; }
+			button { font-family: inherit; font-weight: bold; }
+			input, select, img, button { width: 100%; }
+			#download-button { background-color: #4c9a2a; }
+			.row-sm.col-md { margin: .25rem; }
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav style="margin-bottom: .5rem;">
+				<a href="https://t.me/FontShekaf" target="_blank">کانال تلگرام</a>
+				<a href="https://t.me/FontShekafBot" targrt="_blank">ربات تلگرام</a>
+			</nav>
+			<h1 style="font-weight: 900;">فونت شکاف</h1>
+			<span>ابزار پیش‌نمایش فونت‌ها (بتا)</span>
+		</header>
+		<main class="container">
+			<div class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
+				<div id="font-select-div" class="row-sm col-md">
+					<label for="font-select">فونت: </label>
+					<select id="font-select"></select>
+				</div>
+				<div id="weight-select-div" class="row-sm col-md">
+					<label for="weight-select">وزن: </label>
+					<select id="weight-select"></select>
+				</div>
+			</div>
+			<div id="font-info-div" class="row justify-content-space-between section notice" style="--bs-gap: .5rem .5rem">
+				<h3 style="text-align: center; margin-bottom: 1rem;">اطلاعات فونت</h3>
+				<div class="row-sm col-md"><strong>نام انگلیسی: </strong><span id="font-name"></span></div>
+				<div class="row-sm col-md"><strong>طراح فونت: </strong><span id="font-creator"></span></div>
+				<div class="w-100"></div>
+				<div class="row-sm col-md"><strong>وزن‌های فونت: </strong><span id="font-weights"></span></div>
+				<div class="w-100"></div>
+				<div class="row-sm col-md"><strong>لایسنس فونت: </strong><span id="font-license"></span></div>
+				<div class="row-sm col-md"><strong>ورژن: </strong><span id="font-version"></span></div>
+				<div class="w-100"></div>
+				<div class="row-sm col-md" style="text-align: center; margin: 1rem 0 0;">
+					<a href="" class="button" id="font-url">معرفی فونت و خرید</a>
+				</div>
+			</div>
+			<div id="color-select-div" class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
+				<div class="row-sm col-md">
+					<label for="bg-select">رنگ پس‌زمینه: </label>
+					<input type="text" id="bg-select" value="transparent" data-coloris>
+				</div>
+				<div class="row-sm col-md">
+					<label for="color-select">رنگ متن: </label>
+					<input type="text" id="color-select" value="black" data-coloris>
+				</div>
+			</div>
+			<div class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
+				<div id="size-input-div" class="row-sm col-md">
+					<label for="size-input">سایز فونت: <span id="size-input-value">96</span></label>
+					<input type="range" id="size-input" min="24" max="384" value="96">
+				</div>
+				<div id="format-select-div" class="row-sm col-md">
+					<label for="format-select">فرمت خروجی: </label>
+					<select id="format-select">
+						<option value="png">PNG</option>
+						<option value="svg">SVG</option>
+						<option value="webp">WEBP</option>
+					</select>
+				</div>
+			</div>
+			<div id="text-input-div" class="row section">
+				<label for="text-input">متن شما: </label>
+				<input type="text" id="text-input" maxlength="128">
+			</div>
+			<div id="create-button-div" class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
+				<div class="row-sm col-md">
+					<button type="button" id="create-button">ساخت پیش‌نمایش</button>
+				</div>
+				<div class="row-sm col-md">
+					<button type="button" id="download-button">دانلود پیش‌نمایش زیر</button>
+				</div>
+			</div>
+			<div id="preview-image-div" class="row section">
+				<img src="" alt="" id="preview-image" style="border-radius: 0;"/>
+			</div>
+		</main>
+		<footer>
+			<p dir="rtl">1402 © فونت‌شکاف - تمامی حقوق محفوظ است.</p>
+		</footer>
+		<script>
+			$(document).ready(function() {
+				$("#weight-select-div").hide();
+				$("#font-info-div").hide();
+				$("#color-select-div").hide();
+				$("#size-input-div").hide();
+				$("#format-select-div").hide();
+				$("#text-input-div").hide();
+				$("#create-button-div").hide();
+				$("#preview-image-div").hide();
+				Coloris({
+					themeMode: "light",
+					alpha: true
+				});
+			});
+			$.getJSON("https://font-shekaf-api.onrender.com/fontsJson", function(data) {
+				for (let f of data) {
+					if ($(`#${f.license}-optgroup`).length == 0) {
+						$("#font-select").append($("<optgroup>", {
+							id: `${f.license}-optgroup`,
+							label: f.license
+						}));
+					};
+					$(`#${f.license}-optgroup`).append($("<option>", { 
+						value: f.font,
+						text : f.name
+					}));
+				};
+				$("#font-select").on("change", function() {
+					$("#weight-select").find("option").remove().end()
+					$("#weight-select-div").show();
+					font = data.find(f => f.font === this.value);
+					for (let w of font.weights) {
+						$("#weight-select").append($("<option>", {
+							value: w,
+							text: w
+						}));
+					};
+					$("#font-info-div").show();
+					$("#font-name").text(font.font);
+					$("#font-creator").text(font.creator);
+					$("#font-version").text(font.version);
+					$("#font-weights").text(font.weights.join(", "));
+					$("#font-license").text(font.license);
+					$("#font-url").attr("href", font.url);
+					$("#color-select-div").show();
+					$("#text-input-div").show();
+					$("#format-select-div").show();
+					$("#size-input-div").show();
+					$("#create-button-div").show();
+				});
+				$("#size-input").on("input", function() {
+					$("#size-input-value").text($("#size-input").val());
+				});
+				$("#create-button").on("click", function() {
+					font = $("#font-select").find(":selected").val();
+					weight = $("#weight-select").find(":selected").val();
+					bg = ($("#bg-select").val().startsWith("#")) ? ($("#bg-select").val().substring(1)) : ($("#bg-select").val());
+					color = ($("#color-select").val().startsWith("#")) ? ($("#color-select").val().substring(1)) : ($("#color-select").val());
+					text = $("#text-input").val();
+					size = $("#size-input").val();
+					format = $("#format-select").val();
+					mime = (format == "svg") ? ("svg+xml") : (format);
+					$.getJSON(`https://font-shekaf-api.onrender.com/${format}Json?font=${font}&weight=${weight}&bg=${bg}&color=${color}&size=${size}&text=${text}`, function(data) {
+						base64 = (format == "svg") ? (btoa(data["svg"])) : (data[format]);
+						$("#preview-image").attr("src", `data:image/${mime};base64,${base64}`);
+						$("#preview-image").attr("alt", `${font}-${weight}${(format == "svg") ? ("") : ("-"+bg)}-${color}${(format == "svg") ? ("") : ("-"+size)}-${text}.${format}`);
+					});
+					$("#preview-image-div").show();
+				});
+				$("#download-button").on("click", function() {
+					format = `$("#preview-image").attr("alt")`.split(".")[-1]
+					mime = (format == "svg") ? ("svg+xml") : (format);
+					download($("#preview-image").attr("src"), $("#preview-image").attr("alt"), `image/${mime}`);
+				});
+			});
+		</script>
+	</body>
+</html>
