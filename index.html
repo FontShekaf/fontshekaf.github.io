@@ -7,6 +7,13 @@
 		<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.ico">
 		<link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.svg">
 		<meta name="theme-color" content="#715aff">
+		<meta property="og:site_name" content="فونت شکاف"/>
+		<meta property="og:title" content="ابزار پیش‌نمایش فونت (بتا)"/>
+		<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/art/fontshekaf-banner.png"/>
+		<meta name="twitter:title" content="فونت شکاف"/>
+		<meta name="twitter:description" content="ابزار پیش‌نمایش فونت (بتا)"/>
+		<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/art/fontshekaf-banner.png"/>
+		<meta name="twitter:card" content="summary_large_image"/>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simpledotcss@latest/simple.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap-grid.rtl.min.css"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -47,10 +54,11 @@
 		<header>
 			<nav style="margin-bottom: .5rem;">
 				<a href="https://t.me/FontShekaf" target="_blank">کانال تلگرام</a>
-				<a href="https://t.me/FontShekafBot" targrt="_blank">ربات تلگرام</a>
+				<a href="https://t.me/FontShekafBot" target="_blank">ربات تلگرام</a>
+				<a href="https://fontshekaf.github.io/assets/" target="_blank">طراحی‌ها</a>
 			</nav>
 			<h1 style="font-weight: 900;">فونت شکاف</h1>
-			<span>ابزار پیش‌نمایش فونت‌ها (بتا)</span>
+			<span>ابزار پیش‌نمایش فونت (بتا)</span>
 		</header>
 		<main class="container">
 			<div class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
@@ -136,18 +144,26 @@
 				});
 			});
 			$.getJSON("https://font-shekaf-api.onrender.com/fontsJson", function(data) {
+				data.sort((a, b) => a.name.localeCompare(b.name));
+				shops = []
 				for (let f of data) {
-					if ($(`#${f.license}-optgroup`).length == 0) {
-						$("#font-select").append($("<optgroup>", {
-							id: `${f.license}-optgroup`,
-							label: f.license
-						}));
-					};
+					if (!(shops.find(s => s.id === f.license))) {
+						shops.push({"label": f.shop, "id": f.license});
+					}
+				};
+				shops.sort((a, b) => a.label.localeCompare(b.label));
+				for (let s of shops) {
+					$("#font-select").append($("<optgroup>", {
+						id: `${s.id}-optgroup`,
+						label: s.label
+					}));
+				};
+				for (let f of data) {
 					$(`#${f.license}-optgroup`).append($("<option>", { 
 						value: f.font,
 						text : f.name
 					}));
-				};
+				}
 				$("#font-select").on("change", function() {
 					$("#weight-select").find("option").remove().end()
 					$("#weight-select-div").show();
