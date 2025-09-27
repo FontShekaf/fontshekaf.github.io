@@ -143,7 +143,7 @@
 					alpha: true
 				});
 			});
-			$.getJSON("https://font-shekaf-api.onrender.com/fontsJson", function(data) {
+			$.getJSON("https://fontshekaf-api.onrender.com/fontsJson", function(data) {
 				data.sort((a, b) => a.name.localeCompare(b.name));
 				shops = []
 				for (let f of data) {
@@ -199,7 +199,7 @@
 					size = $("#size-input").val();
 					format = $("#format-select").val();
 					mime = (format == "svg") ? ("svg+xml") : (format);
-					$.getJSON(`https://font-shekaf-api.onrender.com/${format}Json?font=${font}&weight=${weight}&bg=${bg}&color=${color}&size=${size}&text=${text}`, function(data) {
+					$.getJSON(`https://fontshekaf-api.onrender.com/${format}Json?font=${font}&weight=${weight}&bg=${bg}&color=${color}&size=${size}&text=${text}`, function(data) {
 						base64 = (format == "svg") ? (btoa(data["svg"])) : (data[format]);
 						$("#preview-image").attr("src", `data:image/${mime};base64,${base64}`);
 						$("#preview-image").attr("alt", `${font}-${weight}${(format == "svg") ? ("") : ("-"+bg)}-${color}${(format == "svg") ? ("") : ("-"+size)}-${text}.${format}`);
