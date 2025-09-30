@@ -1,217 +1,690 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>فونت شکاف</title>
-		<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.ico">
-		<link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.svg">
-		<meta name="theme-color" content="#715aff">
-		<meta property="og:site_name" content="فونت شکاف"/>
-		<meta property="og:title" content="ابزار پیش‌نمایش فونت (بتا)"/>
-		<meta property="og:image" content="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/art/fontshekaf-banner.png"/>
-		<meta name="twitter:title" content="فونت شکاف"/>
-		<meta name="twitter:description" content="ابزار پیش‌نمایش فونت (بتا)"/>
-		<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/art/fontshekaf-banner.png"/>
-		<meta name="twitter:card" content="summary_large_image"/>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simpledotcss@latest/simple.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap-grid.rtl.min.css"/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
-		<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
-		<style>
-			@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700;900&display=swap");
-			@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap");
-			@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap");
-			:root {
-				--accent-bg: #f0eeff;
-				--accent: #715aff;
-				--preformatted: #333;
-				font-family: "Source Sans Pro", "Vazirmatn", var(--sans-font);
-			}
-			@media (prefers-color-scheme: dark) {
-				:root {
-					color-scheme: dark;
-					--accent-bg: #2b2b2b;
-					--accent: #a682ff;
-					--preformatted: #ccc;
-				}
-				#download-button { background-color: #a4de02; }
-			}
-			body { word-wrap: break-word; }
-			code { color: var(--preformatted); font-family: "Source Code Pro", var(--mono-font) }
-			header { font-weight: 900; text-align: center; }
-			footer { font-weight: 700; text-align: center; }
-			.section { margin: 2rem 0; }
-			button { font-family: inherit; font-weight: bold; }
-			input, select, img, button { width: 100%; }
-			#download-button { background-color: #4c9a2a; }
-			.row-sm.col-md { margin: .25rem; }
-		</style>
-	</head>
-	<body>
-		<header>
-			<nav style="margin-bottom: .5rem;">
-				<a href="https://t.me/FontShekaf" target="_blank">کانال تلگرام</a>
-				<a href="https://t.me/FontShekafBot" target="_blank">ربات تلگرام</a>
-				<a href="https://fontshekaf.github.io/assets/" target="_blank">طراحی‌ها</a>
-			</nav>
-			<h1 style="font-weight: 900;">فونت شکاف</h1>
-			<span>ابزار پیش‌نمایش فونت (بتا)</span>
-		</header>
-		<main class="container">
-			<div class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
-				<div id="font-select-div" class="row-sm col-md">
-					<label for="font-select">فونت: </label>
-					<select id="font-select"></select>
-				</div>
-				<div id="weight-select-div" class="row-sm col-md">
-					<label for="weight-select">وزن: </label>
-					<select id="weight-select"></select>
-				</div>
-			</div>
-			<div id="font-info-div" class="row justify-content-space-between section notice" style="--bs-gap: .5rem .5rem">
-				<h3 style="text-align: center; margin-bottom: 1rem;">اطلاعات فونت</h3>
-				<div class="row-sm col-md"><strong>نام انگلیسی: </strong><span id="font-name"></span></div>
-				<div class="row-sm col-md"><strong>طراح فونت: </strong><span id="font-creator"></span></div>
-				<div class="w-100"></div>
-				<div class="row-sm col-md"><strong>وزن‌های فونت: </strong><span id="font-weights"></span></div>
-				<div class="w-100"></div>
-				<div class="row-sm col-md"><strong>لایسنس فونت: </strong><span id="font-license"></span></div>
-				<div class="row-sm col-md"><strong>ورژن: </strong><span id="font-version"></span></div>
-				<div class="w-100"></div>
-				<div class="row-sm col-md" style="text-align: center; margin: 1rem 0 0;">
-					<a href="" class="button" id="font-url">معرفی فونت و خرید</a>
-				</div>
-			</div>
-			<div id="color-select-div" class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
-				<div class="row-sm col-md">
-					<label for="bg-select">رنگ پس‌زمینه: </label>
-					<input type="text" id="bg-select" value="transparent" data-coloris>
-				</div>
-				<div class="row-sm col-md">
-					<label for="color-select">رنگ متن: </label>
-					<input type="text" id="color-select" value="black" data-coloris>
-				</div>
-			</div>
-			<div class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
-				<div id="size-input-div" class="row-sm col-md">
-					<label for="size-input">سایز فونت: <span id="size-input-value">96</span></label>
-					<input type="range" id="size-input" min="24" max="384" value="96">
-				</div>
-				<div id="format-select-div" class="row-sm col-md">
-					<label for="format-select">فرمت خروجی: </label>
-					<select id="format-select">
-						<option value="png">PNG</option>
-						<option value="svg">SVG</option>
-						<option value="webp">WEBP</option>
-					</select>
-				</div>
-			</div>
-			<div id="text-input-div" class="row section">
-				<label for="text-input">متن شما: </label>
-				<input type="text" id="text-input" maxlength="128">
-			</div>
-			<div id="create-button-div" class="row justify-content-space-between section" style="--bs-gap: .5rem .5rem">
-				<div class="row-sm col-md">
-					<button type="button" id="create-button">ساخت پیش‌نمایش</button>
-				</div>
-				<div class="row-sm col-md">
-					<button type="button" id="download-button">دانلود پیش‌نمایش زیر</button>
-				</div>
-			</div>
-			<div id="preview-image-div" class="row section">
-				<img src="" alt="" id="preview-image" style="border-radius: 0;"/>
-			</div>
-		</main>
-		<footer>
-			<p dir="rtl">1402 © فونت‌شکاف - تمامی حقوق محفوظ است.</p>
-		</footer>
-		<script>
-			$(document).ready(function() {
-				$("#weight-select-div").hide();
-				$("#font-info-div").hide();
-				$("#color-select-div").hide();
-				$("#size-input-div").hide();
-				$("#format-select-div").hide();
-				$("#text-input-div").hide();
-				$("#create-button-div").hide();
-				$("#preview-image-div").hide();
-				Coloris({
-					themeMode: "light",
-					alpha: true
-				});
-			});
-			$.getJSON("https://fontshekaf-api.onrender.com/fontsJson", function(data) {
-				data.sort((a, b) => a.name.localeCompare(b.name));
-				shops = []
-				for (let f of data) {
-					if (!(shops.find(s => s.id === f.license))) {
-						shops.push({"label": f.shop, "id": f.license});
-					}
-				};
-				shops.sort((a, b) => a.label.localeCompare(b.label));
-				for (let s of shops) {
-					$("#font-select").append($("<optgroup>", {
-						id: `${s.id}-optgroup`,
-						label: s.label
-					}));
-				};
-				for (let f of data) {
-					$(`#${f.license}-optgroup`).append($("<option>", { 
-						value: f.font,
-						text : f.name
-					}));
-				}
-				$("#font-select").on("change", function() {
-					$("#weight-select").find("option").remove().end()
-					$("#weight-select-div").show();
-					font = data.find(f => f.font === this.value);
-					for (let w of font.weights) {
-						$("#weight-select").append($("<option>", {
-							value: w,
-							text: w
-						}));
-					};
-					$("#font-info-div").show();
-					$("#font-name").text(font.font);
-					$("#font-creator").text(font.creator);
-					$("#font-version").text(font.version);
-					$("#font-weights").text(font.weights.join(", "));
-					$("#font-license").text(font.license);
-					$("#font-url").attr("href", font.url);
-					$("#color-select-div").show();
-					$("#text-input-div").show();
-					$("#format-select-div").show();
-					$("#size-input-div").show();
-					$("#create-button-div").show();
-				});
-				$("#size-input").on("input", function() {
-					$("#size-input-value").text($("#size-input").val());
-				});
-				$("#create-button").on("click", function() {
-					font = $("#font-select").find(":selected").val();
-					weight = $("#weight-select").find(":selected").val();
-					bg = ($("#bg-select").val().startsWith("#")) ? ($("#bg-select").val().substring(1)) : ($("#bg-select").val());
-					color = ($("#color-select").val().startsWith("#")) ? ($("#color-select").val().substring(1)) : ($("#color-select").val());
-					text = $("#text-input").val();
-					size = $("#size-input").val();
-					format = $("#format-select").val();
-					mime = (format == "svg") ? ("svg+xml") : (format);
-					$.getJSON(`https://fontshekaf-api.onrender.com/${format}Json?font=${font}&weight=${weight}&bg=${bg}&color=${color}&size=${size}&text=${text}`, function(data) {
-						base64 = (format == "svg") ? (btoa(data["svg"])) : (data[format]);
-						$("#preview-image").attr("src", `data:image/${mime};base64,${base64}`);
-						$("#preview-image").attr("alt", `${font}-${weight}${(format == "svg") ? ("") : ("-"+bg)}-${color}${(format == "svg") ? ("") : ("-"+size)}-${text}.${format}`);
-					});
-					$("#preview-image-div").show();
-				});
-				$("#download-button").on("click", function() {
-					format = `$("#preview-image").attr("alt")`.split(".")[-1]
-					mime = (format == "svg") ? ("svg+xml") : (format);
-					download($("#preview-image").attr("src"), $("#preview-image").attr("alt"), `image/${mime}`);
-				});
-			});
-		</script>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>فونت شکاف</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/FontShekaf/assets@main/favicon/favicon.svg">
+    <meta name="theme-color" content="#715aff">
+    
+    <!-- Telegram UI Kit -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@telegram-apps/telegram-ui@2.1.8/dist/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@telegram-apps/telegram-ui@2.1.8/dist/telegram-ui.umd.js"></script>
+    
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+    
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap");
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "Vazirmatn", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--tgui--bg_color, #ffffff);
+            color: var(--tgui--text_color, #000000);
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #715aff 0%, #a682ff 100%);
+            padding: 24px 16px;
+            text-align: center;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .section {
+            background: var(--tgui--secondary_bg_color, #f4f4f5);
+            margin: 8px 0;
+            padding: 12px 16px;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--tgui--hint_color, #999999);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        
+        .cell {
+            background: var(--tgui--bg_color, #ffffff);
+            padding: 12px 16px;
+            margin-bottom: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+        }
+        
+        .cell:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .cell:last-child {
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 0;
+        }
+        
+        .cell:only-child {
+            border-radius: 12px;
+        }
+        
+        .cell-label {
+            font-size: 16px;
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .cell-value {
+            font-size: 15px;
+            color: var(--tgui--hint_color, #999999);
+            margin-left: 12px;
+        }
+        
+        select, input[type="text"], input[type="number"] {
+            background: var(--tgui--bg_color, #ffffff);
+            border: 1px solid var(--tgui--separator_color, #e5e5ea);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 16px;
+            width: 100%;
+            color: var(--tgui--text_color, #000000);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 12px center;
+            padding-left: 32px;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--tgui--separator_color, #e5e5ea);
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #715aff;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(113, 90, 255, 0.3);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #715aff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(113, 90, 255, 0.3);
+        }
+        
+        .color-picker-row {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .color-picker-group {
+            flex: 1;
+        }
+        
+        .color-picker-group label {
+            font-size: 13px;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--tgui--hint_color, #999999);
+        }
+        
+        .color-picker-group input[type="text"] {
+            padding: 10px 12px;
+        }
+        
+        .slider-container {
+            padding: 8px 0;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .slider-value {
+            font-weight: 600;
+            color: #715aff;
+        }
+        
+        .button {
+            background: #715aff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .button:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+        
+        .button.secondary {
+            background: #4c9a2a;
+        }
+        
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .info-item {
+            background: var(--tgui--bg_color, #ffffff);
+            padding: 12px;
+            border-radius: 10px;
+        }
+        
+        .info-item-label {
+            font-size: 13px;
+            color: var(--tgui--hint_color, #999999);
+            margin-bottom: 4px;
+        }
+        
+        .info-item-value {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .preview-container {
+            background: var(--tgui--bg_color, #ffffff);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .preview-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 24px 16px;
+            font-size: 13px;
+            color: var(--tgui--hint_color, #999999);
+        }
+        
+        .links-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .link-button {
+            flex: 1;
+            background: rgba(113, 90, 255, 0.1);
+            color: #715aff;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .link-button:active {
+            transform: scale(0.98);
+            background: rgba(113, 90, 255, 0.2);
+        }
+        
+        .loading-container {
+            background: var(--tgui--bg_color, #ffffff);
+            border-radius: 12px;
+            padding: 32px 16px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--tgui--separator_color, #e5e5ea);
+            border-top-color: #715aff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--tgui--text_color, #000000);
+            margin-bottom: 8px;
+        }
+        
+        .loading-subtext {
+            font-size: 14px;
+            color: var(--tgui--hint_color, #999999);
+        }
+        
+        .error-container {
+            background: #fee;
+            border: 2px solid #fcc;
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        
+        .error-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #c33;
+            margin-bottom: 8px;
+        }
+        
+        .error-subtext {
+            font-size: 14px;
+            color: #e66;
+            margin-bottom: 16px;
+        }
+        
+        .retry-button {
+            background: #c33;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .retry-button:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>فونت شکاف</h1>
+            <p>ابزار پیش‌نمایش فونت</p>
+        </div>
+        
+        <div class="section">
+            <div class="links-container">
+                <a href="https://t.me/FontShekaf" target="_blank" class="link-button">کانال تلگرام</a>
+                <a href="https://t.me/FontShekafBot" target="_blank" class="link-button">ربات</a>
+                <a href="https://fontshekaf.github.io/assets/" target="_blank" class="link-button">طراحی‌ها</a>
+            </div>
+        </div>
+        
+        <!-- Loading State -->
+        <div class="section" id="loading-section">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">در حال بارگذاری فونت‌ها...</div>
+                <div class="loading-subtext">لطفاً صبر کنید، ممکن است چند لحظه طول بکشد</div>
+            </div>
+        </div>
+        
+        <!-- Error State -->
+        <div class="section hidden" id="error-section">
+            <div class="error-container">
+                <div class="error-icon">⚠️</div>
+                <div class="error-text">خطا در اتصال به سرور</div>
+                <div class="error-subtext">متأسفانه نتوانستیم به سرور متصل شویم. لطفاً دوباره تلاش کنید.</div>
+                <button class="retry-button" onclick="location.reload()">تلاش مجدد</button>
+            </div>
+        </div>
+        
+        <div class="section hidden" id="font-section">
+            <div class="section-title">انتخاب فونت</div>
+            <div class="cell">
+                <div class="cell-label">فونت</div>
+                <select id="font-select" style="max-width: 60%;">
+                    <option value="">انتخاب کنید...</option>
+                </select>
+            </div>
+            <div class="cell hidden" id="weight-cell">
+                <div class="cell-label">وزن فونت</div>
+                <select id="weight-select" style="max-width: 40%;"></select>
+            </div>
+        </div>
+        
+        <div class="section hidden" id="font-info-section">
+            <div class="section-title">اطلاعات فونت</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-item-label">نام انگلیسی</div>
+                    <div class="info-item-value" id="font-name">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">طراح</div>
+                    <div class="info-item-value" id="font-creator">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">وزن‌ها</div>
+                    <div class="info-item-value" id="font-weights">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">لایسنس</div>
+                    <div class="info-item-value" id="font-license">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">ورژن</div>
+                    <div class="info-item-value" id="font-version">-</div>
+                </div>
+            </div>
+            <div class="cell" style="margin-top: 8px; border-radius: 12px;">
+                <a href="#" class="button" id="font-url" target="_blank" style="text-decoration: none;">معرفی و خرید فونت</a>
+            </div>
+        </div>
+        
+        <div class="section hidden" id="customization-section">
+            <div class="section-title">تنظیمات ظاهری</div>
+            <div class="cell">
+                <div class="color-picker-row">
+                    <div class="color-picker-group">
+                        <label>پس‌زمینه</label>
+                        <input type="text" id="bg-select" value="#ffffff" data-coloris>
+                    </div>
+                    <div class="color-picker-group">
+                        <label>رنگ متن</label>
+                        <input type="text" id="color-select" value="#000000" data-coloris>
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div class="slider-container" style="width: 100%;">
+                    <div class="slider-label">
+                        <span>سایز فونت</span>
+                        <span class="slider-value" id="size-value">96</span>
+                    </div>
+                    <input type="range" id="size-input" min="24" max="384" value="96">
+                </div>
+            </div>
+            <div class="cell">
+                <div class="cell-label">فرمت خروجی</div>
+                <select id="format-select" style="max-width: 40%;">
+                    <option value="png">PNG</option>
+                    <option value="svg">SVG</option>
+                    <option value="webp">WEBP</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="section hidden" id="text-section">
+            <div class="section-title">متن شما</div>
+            <div class="cell">
+                <input type="text" id="text-input" placeholder="متن خود را وارد کنید..." maxlength="128">
+            </div>
+        </div>
+        
+        <div class="section hidden" id="action-section">
+            <button class="button" id="create-button">ساخت پیش‌نمایش</button>
+            <button class="button secondary hidden" id="download-button" style="margin-top: 8px;">دانلود تصویر</button>
+        </div>
+        
+        <div class="section hidden" id="preview-section">
+            <div class="section-title">پیش‌نمایش</div>
+            <div class="preview-container">
+                <img src="" alt="" id="preview-image">
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 1404 فونت‌شکاف - تمامی حقوق محفوظ است</p>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Telegram WebApp
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+        }
+        
+        let fontsData = [];
+        
+        $(document).ready(function() {
+            // Initialize Coloris
+            Coloris({
+                themeMode: 'auto',
+                alpha: true,
+                format: 'hex',
+                swatches: [
+                    '#000000',
+                    '#ffffff',
+                    '#715aff',
+                    '#ff0000',
+                    '#00ff00',
+                    '#0000ff',
+                    '#ffff00',
+                    '#ff00ff',
+                    '#00ffff'
+                ]
+            });
+            
+            // Check API health first
+            checkApiHealth();
+        });
+        
+        function checkApiHealth() {
+            $.ajax({
+                url: "https://fontshekaf-api.onrender.com/",
+                method: "GET",
+                timeout: 60000,
+                success: function(response) {
+                    console.log("API is online:", response);
+                    loadFonts();
+                },
+                error: function(xhr, status, error) {
+                    console.error("API health check failed:", error);
+                    $("#loading-section").addClass("hidden");
+                    $("#error-section").removeClass("hidden");
+                }
+            });
+        }
+        
+        function loadFonts() {
+            $.ajax({
+                url: "https://fontshekaf-api.onrender.com/fontsJson",
+                method: "GET",
+                timeout: 30000,
+                success: function(data) {
+                    if (!data || !Array.isArray(data) || data.length === 0) {
+                        console.error("Invalid font data received");
+                        $("#loading-section").addClass("hidden");
+                        $("#error-section").removeClass("hidden");
+                        return;
+                    }
+                    
+                    fontsData = data;
+                    data.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    const shops = [];
+                    for (let f of data) {
+                        if (!shops.find(s => s.id === f.license)) {
+                            shops.push({"label": f.shop, "id": f.license});
+                        }
+                    }
+                    shops.sort((a, b) => a.label.localeCompare(b.label));
+                    
+                    for (let s of shops) {
+                        $("#font-select").append($("<optgroup>", {
+                            id: `${s.id}-optgroup`,
+                            label: s.label
+                        }));
+                    }
+                    
+                    for (let f of data) {
+                        $(`#${f.license}-optgroup`).append($("<option>", {
+                            value: f.font,
+                            text: f.name
+                        }));
+                    }
+                    
+                    $("#loading-section").addClass("hidden");
+                    $("#font-section").removeClass("hidden");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Failed to load fonts:", error);
+                    $("#loading-section").addClass("hidden");
+                    $("#error-section").removeClass("hidden");
+                }
+            });
+        }
+        
+        // Font selection handler
+        $("#font-select").on("change", function() {
+            const selectedFont = this.value;
+            if (!selectedFont) return;
+            
+            const font = fontsData.find(f => f.font === selectedFont);
+            
+            $("#weight-select").empty();
+            for (let w of font.weights) {
+                $("#weight-select").append($("<option>", {
+                    value: w,
+                    text: w
+                }));
+            }
+            
+            $("#weight-cell").removeClass("hidden");
+            
+            $("#font-name").text(font.font);
+            $("#font-creator").text(font.creator);
+            $("#font-version").text(font.version);
+            $("#font-weights").text(font.weights.join(", "));
+            $("#font-license").text(font.license);
+            $("#font-url").attr("href", font.url);
+            
+            $("#font-info-section").removeClass("hidden");
+            $("#customization-section").removeClass("hidden");
+            $("#text-section").removeClass("hidden");
+            $("#action-section").removeClass("hidden");
+        });
+        
+        $("#size-input").on("input", function() {
+            $("#size-value").text($(this).val());
+        });
+        
+        $("#create-button").on("click", function() {
+            const font = $("#font-select").val();
+            const weight = $("#weight-select").val();
+            let bg = $("#bg-select").val();
+            let color = $("#color-select").val();
+            const text = $("#text-input").val();
+            const size = $("#size-input").val();
+            const format = $("#format-select").val();
+            
+            if (!text) {
+                alert("لطفاً متن خود را وارد کنید");
+                return;
+            }
+            
+            bg = bg.startsWith("#") ? bg.substring(1) : bg;
+            color = color.startsWith("#") ? color.substring(1) : color;
+            
+            const mime = (format === "svg") ? "svg+xml" : format;
+            
+            $.getJSON(`https://fontshekaf-api.onrender.com/${format}Json?font=${font}&weight=${weight}&bg=${bg}&color=${color}&size=${size}&text=${text}`, function(data) {
+                const base64 = (format === "svg") ? btoa(data["svg"]) : data[format];
+                $("#preview-image").attr("src", `data:image/${mime};base64,${base64}`);
+                $("#preview-image").attr("alt", `${font}-${weight}-${bg}-${color}-${size}-${text}.${format}`);
+                
+                $("#preview-section").removeClass("hidden");
+                $("#download-button").removeClass("hidden");
+                
+                $("#preview-section")[0].scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+        });
+        
+        $("#download-button").on("click", function() {
+            const src = $("#preview-image").attr("src");
+            const alt = $("#preview-image").attr("alt");
+            const format = alt.split(".").pop();
+            const mime = (format === "svg") ? "svg+xml" : format;
+            
+            download(src, alt, `image/${mime}`);
+        });
+    </script>
+</body>
 </html>
